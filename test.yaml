@@ -1,0 +1,14 @@
+--- 
+- name: Teste # Nome do playbook
+  hosts: swarm-dev # Nome do grupo de maquinas que será orquestrada
+  become: yes # necessário para autenticar como sudo
+  serial: 5 #Numero de execuções em paralelo 
+  become_user: root #ao entrar na maquina, irá autenticar como sudo 
+  become_method: sudo # Método para entrar como sudo 
+  tasks:
+
+     - name: Indicando o nome da maquina e dando oi # Nome da tarefa
+       command: bash -lc "hostname && echo oi"  # Módulo utilizado para mandar comandos 
+       register: result #Variável que guarda o resultado da execução do comando
+     - debug: # Utilizado para mostrar uma mensagem
+         msg: "{{ result.stdout_lines  }}" # Mensagem com o resultado da execução
